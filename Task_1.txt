@@ -1,0 +1,176 @@
+Question 1.
+Write a program to print the numbers from 10 to 50 using for loop/while loop.
+Code :
+package org.guvi.task1;
+
+public class Main {
+
+	public static void main(String[] args) {
+		for (int i = 10; i <= 50; i++) {
+			if (i == 50) {
+				System.out.print(i);
+			} else {
+				System.out.print(i + " ");
+			}
+
+		}
+	}
+}
+Output :
+10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
+
+Question 2.
+Write a program that find a given number is negative or positive.
+Code :
+package org.guvi.task1;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter a number to check number is positive or negative :");
+		int num = scan.nextInt();
+		if(num>=0) {
+			System.out.println("Given number : "+num+" is positive");
+		}else {
+			System.out.println("Given number : "+num+" is negative");
+		}
+		scan.close();
+	}
+}
+Output :
+Enter a number to check number is positive or negative :
+18
+Given number : 18 is positive
+
+Question 3.
+Write down the program to reverse the given number using loops.
+Code :
+package org.guvi.task1;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter a number to reverse : ");
+		int num = scan.nextInt();
+		String reverse = "";
+		while (num > 0) {
+			int rem = num % 10;
+			num = num / 10;
+			reverse += Integer.toString(rem);
+		}
+		System.out.println("Reverse is : " + reverse);
+		scan.close();
+	}
+}
+Output :
+Enter a number to reverse : 
+876
+Reverse is : 678
+
+Question 4.
+Write a java program to find the smallest number among three numbers.
+Code :
+package org.guvi.task1;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter three numbers a, b, c to check smallest number : ");
+		int a = scan.nextInt();
+		int b = scan.nextInt();
+		int c = scan.nextInt();
+		if (a < b && a < c) {
+			System.out.println("The smallest number among " + a + ", " + b + ", " + c + " is : " + a);
+		} else if (b < a && b < c) {
+			System.out.println("The smallest number among " + a + ", " + b + ", " + c + " is : " + b);
+		} else {
+			System.out.println("The smallest number among " + a + ", " + b + ", " + c + " is : " + c);
+		}
+		scan.close();
+	}
+}
+Output :
+Enter three numbers a, b, c to check smallest number : 
+5 7 9
+The smallest number among 5, 7, 9 is : 5
+
+Question 5.
+Write a Java Program that takes the purchase amount as input and calculates the final payable amount after applying the discount.
+	1.If the purchase amount is less than 500, no discount is applied.
+	2.If the purchase amount is between 500 and 1000, a 10% discount is applied.
+	3.If the purchase amount is greater than 1000 a 20% discount is applied.
+Code :
+package org.guvi.task1;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the purchase amount : ");
+		int amount = scan.nextInt();
+		int bill = 0;
+		int discount = 0;
+		if (amount < 500) {
+			bill = amount;
+		} else if (amount >= 500 && amount <= 1000) {
+			discount = (10 * amount) / 100;
+			bill = amount - discount;
+		} else if (amount > 1000) {
+			discount = (10 * amount) / 100;
+			bill = amount - discount;
+		}
+
+		System.out.println("Final Payable amount after applying Discount is :" + bill);
+		scan.close();
+	}
+}
+Output :
+Enter the purchase amount : 
+750
+Final Payable amount after applying Discount is :675
+
+Question 6.
+Write a java program to print below pattern.
+5 5 5 5 5
+5 4 4 4 4
+5 4 3 3 3
+5 4 3 2 2
+5 4 3 2 1
+Code :
+package org.guvi.task1;
+
+public class Main {
+
+	public static void main(String[] args) {
+		int num = 5;
+		for (int i = num; i >= 1; i--) {
+			for (int j = num; j >= i; j--) {
+				System.out.print(j+" ");
+			}
+			for (int k = 1; k < i; k++) {
+				System.out.print(i+" ");
+			}
+			System.out.println();
+		}
+	}
+}
+Output :
+5 5 5 5 5 
+5 4 4 4 4 
+5 4 3 3 3 
+5 4 3 2 2 
+5 4 3 2 1 
+
+
+
