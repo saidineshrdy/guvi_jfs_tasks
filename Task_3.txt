@@ -1,0 +1,401 @@
+Question 1. 
+Task a) Design a Java program that used OOP principles to model the Book Management System.Create two classes : Book and Library. The Book class should have attributes such as bookID, title, author, and isAvailable. The Library class should include an array to store book objects.
+
+Task b) Provide methods to add book, remove book , search book (using id) and display books. Write a Java Program that demonstrates the use of these classes and methods by allowing the user to interact with the library system.
+
+Code :
+package org.guvi.task3;
+//class Book 
+public class Book {
+	// data memebers
+	private int bookID;
+	private String title;
+	private String author;
+	private boolean isAvailable;
+
+	// arg constructor to initialize bookID, title, author, isAvailable by using this keyword to access datamembers of Book class
+	public Book(int bookID,String title, String author, boolean isAvailable) {
+		this.bookID = bookID;
+		this.title = title;
+		this.author = author;
+		this.isAvailable = isAvailable;
+	}
+
+	// getters and setters methods for bookID, title, author, isAvailable
+	public int getBookID() {
+		return bookID;
+	}
+
+	public void setBookID(int bookID) {
+		this.bookID = bookID;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
+	// display Book details by using toString method
+	@Override
+	public String toString() {
+		return "Book [bookID=" + bookID + ", title=" + title + ", author=" + author + ", isAvailable=" + isAvailable
+				+ "]";
+	}
+
+	
+
+}
+
+package org.guvi.task3;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+//class Library with Book type as a data member for Library methods purpose
+public class Library {
+	// data members
+	// taking Book type
+	private Book[] books_Array;
+	private int size;
+
+	// no-arg constructor
+	public Library() {
+		
+		this.books_Array = new Book[5];
+		size = 0;
+	}
+
+	// add book to Library
+	public void addBook(Book book) {
+		if (size < books_Array.length) {
+			books_Array[size] = book;
+			size++;
+		} else {
+			System.out.println("books_Array is Full, Cannot add Book");
+		}
+
+	}
+
+	// replace book from Library
+	public void replaceBook(int bookID) {
+		for (int i = 0; i < size; i++) {
+			if (books_Array[i] != null && (books_Array[i].getBookID() == bookID)) {
+				Scanner scan = new Scanner(System.in);
+				System.out.println("Enter Book Name to replace :");
+				String bookName = scan.nextLine();
+				System.out.println("Enter Author to replace :");
+				String bookAuthor = scan.nextLine();
+				books_Array[i].setTitle(bookName);
+				books_Array[i].setAuthor(bookAuthor);
+				System.out.println("Replace Book success");
+				scan.close();
+				break;
+			}
+		}
+	}
+
+	// diplay all books in Library
+	public void displayBooks() {
+		System.out.println("Books Details in Library are :");
+		System.out.println(Arrays.toString(books_Array));
+	}
+
+	// remove book from library
+	public void removeBook(int bookID) {
+		for (int i = 0; i < size; i++) {
+			if (books_Array[i].getBookID() == bookID) {
+				books_Array[i] = null;
+				System.out.println("Book is removed from Library");
+				break;
+			}
+		}
+	}
+
+	// search book in Library
+	public Book searchBook(int bookID) {
+		for (int i = 0; i < size; i++) {
+			if (books_Array[i] != null && (books_Array[i].getBookID() == bookID)) {
+				return books_Array[i];
+			}
+		}
+		return null;
+	}
+
+}
+
+package org.guvi.task3;
+
+import java.util.Scanner;
+
+//class BookManagementSystem with main method to start execution of program from here
+public class BookManagementSystem {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome to Book Management System");
+		// object instantiation for Library class
+		Library library = new Library();
+		// using Scanner class for taking input from user from console
+		Scanner scan = new Scanner(System.in);
+		// considering while loop to iterate untill user wants to exit or stop the
+		// program
+		while (true) {
+			System.out.println("Menu\r\n" + "1. Add Book\r\n" + "2. Replace Book\r\n" + "3. Remove Book\r\n"
+					+ "4. Search Book\r\n" + "5. Display Book\r\n" + "6. Exit\r\n");
+
+			System.out.println("Enter your Choice from 1-6 ");
+			int choice = scan.nextInt();
+			
+			// switch case implementation as per the operation user want to execute
+			switch (choice) {
+			
+			// Add Book logic to Library
+			case 1:
+				System.out.println("Enter Book ID: ");
+				int bookID = scan.nextInt();
+				System.out.println("Enter Title of Book: ");
+				String title = scan.nextLine();
+				System.out.println("Enter Author of Book: ");
+				String author = scan.nextLine();
+				System.out.println("Enter Book Availability in True or False");
+				boolean option = scan.nextBoolean();
+				Book book = new Book(bookID, title, author, option);
+				library.addBook(book);
+				System.out.println("Book added to Library");
+				break;
+				
+			// Replace Book Logic from Library
+			case 2:
+				System.out.println("Enter Book ID to replace Book Details: ");
+				int bookIDToReplace = scan.nextInt();
+				library.replaceBook(bookIDToReplace);
+				break;
+			// Remove Book from Library
+			case 3:
+				System.out.println("Enter Book ID to remove: ");
+				int bookIDTORemove = scan.nextInt();
+				library.removeBook(bookIDTORemove);
+				break;
+			// Search Book from Library
+			case 4:
+				System.out.println("Enter Book ID to search in Library: ");
+				int bookIDToSearch = scan.nextInt();
+				Book bookSearch = library.searchBook(bookIDToSearch);
+				if (bookSearch != null) {
+					System.out.println("Book found: " + bookSearch);
+				} else {
+					System.out.println("Book not found in Library");
+				}
+				break;
+			// Display Books of Library
+			case 5:
+				library.displayBooks();
+				break;
+			// Exit the switch case and from Program exection
+			case 6:
+				System.out.println("Thank you Exiting Book Management System.");
+				System.exit(0);
+				// default case incase of invalid user input from console
+			default:
+				System.out.println("Invalid chocice. Enter valid option");
+			}
+
+		}
+	}
+}
+
+Output :
+Welcome to Book Management System
+Menu
+1. Add Book
+2. Replace Book
+3. Remove Book
+4. Search Book
+5. Display Book
+6. Exit
+
+Enter your Choice from 1-6 
+1
+Enter Book ID:
+101
+Enter Title of Book:
+Programming C
+Enter Author of Book:
+Bala Guruswamy
+Enter Book Availability in True or False
+True
+Book added to Library
+Menu
+1. Add Book
+2. Replace Book
+3. Remove Book
+4. Search Book
+5. Display Book
+6. Exit
+
+Enter your Choice from 1-6 
+2
+Enter Book ID to replace Book Details: 
+101
+Enter Book Name to replace :
+Java Programming
+Enter Author to replace :
+Keithy Seirra
+Replace Book success
+Menu
+1. Add Book
+2. Replace Book
+3. Remove Book
+4. Search Book
+5. Display Book
+6. Exit
+
+Enter your Choice from 1-6 
+6
+Menu
+1. Add Book
+2. Replace Book
+3. Remove Book
+4. Search Book
+5. Display Book
+6. Exit
+
+Enter your Choice from 1-6 
+6
+Thank you Exiting Book Management System.
+
+Question 2.Create Interface Taxable with members salesTax=7% and incomeTax=10.5%. create abstract method calcTax().
+Task a)Create class Employee(empId, name, salary) and implment Taxable to calculate incomeTax on yearly salary.
+Task b)Create class Product(pid, price, quantity) and implement Taxable to calculate salesTax on unit price of product.
+Task c)Create class for main method(Say XYZ), accept employee information and a product information from user and print income tax respectively.
+Code :
+package org.guvi.task3;
+//interface Taxable with two public static final variables salesTax and incomeTax with calcTax method defination
+public interface Taxable {
+	// data members with initalisation
+	float salesTax = 0.07f;
+	float incomeTax = 0.105f;
+	//method for calculation Tax
+	void calcTax();
+}
+package org.guvi.task3;
+//class Employee which is implementing Taxable Interface and this Employee class implements the declared methods of Taxable interface
+public class Employee implements Taxable{
+	//data members
+	private int empId;
+	private String name;
+	private double salary;
+	
+	//arg constructor for initializing Employee class datamembers empId, name, salary
+	public Employee(int empId, String name, double salary) {
+		this.empId = empId;
+		this.name = name;
+		this.salary = salary;
+	}
+	
+	//calculating Tax for yearly employee salary from Taxable interface
+	//incomeTax is the public static final variable for calculating employee tex
+	@Override
+	public void calcTax() {
+		double employeeTax = salary*incomeTax;
+		System.out.println("Tax Payable for Employee is "+employeeTax);
+	}
+
+	
+	
+}
+package org.guvi.task3;
+//class Product which is implementing Taxable interface
+public class Product implements Taxable{
+	//data members
+	private int pid;
+	private double price;
+	private int quantity;
+	
+	//arg constructor to initialise Product class with data members pid, price, quantity
+	public Product(int pid, double price, int quantity) {
+		this.pid = pid;
+		this.price = price;
+		this.quantity = quantity;
+	}
+	//method to calculate Tax for Products purchase and here salesTax is the public static final variable and intitialised in interface itself
+	@Override
+	public void calcTax() {
+		double productTax = quantity*price*salesTax;
+		System.out.println("Product Purchase tax as per quantity is "+productTax);
+	}
+	
+	
+}
+package org.guvi.task3;
+
+import java.util.Scanner;
+//calss XYZ with main function to start the program
+public class XYZ {
+
+	public static void main(String[] args) {
+		//scanner class to take input from user from console
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Calculate Yearly Tax for Employee :");
+		System.out.println("Enter Employee ID :");
+		int id = scan.nextInt();
+		System.out.println("Enter Employee Name :");
+		String name = scan.nextLine();
+		scan.next();
+		System.out.println("Enter Salary ");
+		double salary = scan.nextDouble();
+		//initialisation of Employee class by object creation
+		Employee emp1 = new Employee(id, name, salary);
+		emp1.calcTax();
+		
+		System.out.println("Calculate Sales Tax for Product Purchase ");
+		System.out.println("Enter Product ID :");
+		int pid = scan.nextInt();
+		System.out.println("Enter Price of Product :");
+		double price = scan.nextDouble();
+		System.out.println("Enter Quantity :");
+		int quantity = scan.nextInt();
+		//intitialisation of Product class by object creation
+		Product p1 = new Product(pid, price, quantity);
+		p1.calcTax();
+		
+		scan.close();
+	}
+
+}
+Output :
+Calculate Yearly Tax for Employee :
+Enter Employee ID :
+4609
+Enter Employee Name :
+SaiDinesh
+Enter Salary 
+100000
+Tax Payable for Employee is 10499.999672174454
+Calculate Sales Tax for Product Purchase 
+Enter Product ID :
+789
+Enter Price of Product :
+65000
+Enter Quantity :
+1
+Product Purchase tax as per quantity is 4550.00001937151
