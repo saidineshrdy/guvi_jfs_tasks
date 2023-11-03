@@ -1,0 +1,374 @@
+Q1. Ramesh is developing a student management system for a university. In this system , you hava a stuent class to represent student information. you are asked to help Ramesh to handle exception which can be occured into program according to following Scenarios:
+ a)class Student with attributes roll no, name, age, and course.Initialize values through parameterized constructor.
+ b)If the age of the student is not between 15 and 21 then generate a user-defined exception "AgeNotWithinRangeException".
+c)If a name contains number or special symbols, raise exception "NameNotValidException". Define the two exception classes.
+Code :
+package guvi.exceptiontask01;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+//class Student
+public class Student {
+	// data members
+	private long roll_no;
+	private String name;
+	private int age;
+	private String course;
+
+
+	public static boolean nameValid(String name) {
+		int count = 0;
+
+		for (char c : name.toCharArray()) {
+			int num = c;
+
+			if ((num >= 97 && num <= 122) || (num >= 65 && num <= 90)) {
+				count++;
+			} else {
+				count--;
+			}
+		}
+
+		if (count == name.length()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	// parameterised constructor
+	public Student(long roll_no, String name, int age, String course)
+			throws AgeNotWithinRangeException, NameNotValidException {
+
+		this.roll_no = roll_no;
+
+		if (age > 15 && age < 21) {
+			this.age = age;
+		} else {
+			throw new AgeNotWithinRangeException(
+					"Invalid Age of the Student Please Check ,AgeNotWithinRangeException Occured");
+		}
+
+		if (nameValid(name)) {
+			this.name = name;
+		} else {
+			throw new NameNotValidException("Invalid Name of the Student Please Check ,NameNotValidException Occured");
+		}
+		this.course = course;
+	}
+
+	// getter methods
+	public long getRoll_no() {
+		return roll_no;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+	// toString method to display the student details
+
+	@Override
+	public String toString() {
+		return "Student roll_no=" + roll_no + ", name=" + name + ", age=" + age + ", course=" + course;
+	}
+
+}
+
+package guvi.exceptiontask01;
+
+//user-defined AgeNotWithinRangeException child class inheriting from Exception Parent class
+public class AgeNotWithinRangeException extends Exception {
+	public AgeNotWithinRangeException(String errorMessage) {
+		// using super keyword accesing parent class constructor
+		super(errorMessage);
+	}
+}
+
+package guvi.exceptiontask01;
+
+//class NameNotValidException child class inheriting from Exception Parent class
+public class NameNotValidException extends Exception {
+	public NameNotValidException(String errorMessage) {
+		// accessing parent class constructor by using super keyword
+		super(errorMessage);
+	}
+}
+
+package guvi.exceptiontask01;
+
+//StudentMain class with main method to start the program
+public class StudentMain {
+
+	public static void main(String[] args) {
+
+		// Object creation for Student class by using parameterised cosntructor
+		// surrounding with try and catch to handle Exception for Age and Name by using
+		// AgeNotWithinRangeException and NameNotValidException
+		try {
+			Student s1 = new Student(101, "Dinesh", 18, "Mechanical");
+			System.out.println(s1.toString());
+			Student s2 = new Student(105, "Vani2", 18, "Electronics");
+			System.out.println(s2.toString());
+			Student s3 = new Student(110, "Lahari", 16, "IT");
+			System.out.println(s3.toString());
+		} catch (AgeNotWithinRangeException e) {
+			System.out.println(e);
+		} catch (NameNotValidException e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+Output :
+Student roll_no=101, name=Dinesh, age=18, course=Mechanical
+guvi.exceptiontask01.NameNotValidException: Invalid Name of the Student Please Check ,NameNotValidException Occured
+
+Q2.Create a class Voter(voterId,name,age) with parameterized constructor. The parameterized constructor should throw a checked exception if age is less than 18. The message of exception is "invalid age for voter"
+Code :
+package guvi.exceptiontask02;
+
+//class Voter 
+public class Voter {
+	// data members
+	private int voterId;
+	private String name;
+	private int age;
+
+	// param constructor for initializing Voter class instance variables and also
+	// checking for InvalidAgeVoterException
+	public Voter(int voterId, String name, int age) throws InvalidAgeVoterException {
+		this.voterId = voterId;
+		this.name = name;
+		if (age <= 18) {
+			throw new InvalidAgeVoterException("invalid age for voter");
+		} else {
+			this.age = age;
+		}
+
+	}
+	// getters methods
+
+	public int getVoterId() {
+		return voterId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	// toString method to print voter object details
+	@Override
+	public String toString() {
+		return "Voter Details voterId=" + voterId + ", name=" + name + ", age=" + age;
+	}
+
+}
+
+package guvi.exceptiontask02;
+
+//user defined Exception InvalidAgeVoterException extending from Parent Exception Class
+public class InvalidAgeVoterException extends Exception {
+	// InvalidAgeVoterException cosntructor with message parameter in which it
+	// access parent class constructor using super keyowrd
+	public InvalidAgeVoterException(String message) {
+		super(message);
+	}
+
+}
+
+package guvi.exceptiontask02;
+
+//class VoterMain with main method
+public class VoterMain {
+
+	public static void main(String[] args) {
+		// surrounding with try and catch block to Handle Exception of
+		// InvalidAgeVoterException
+		try {
+			// Voter class instantiation by object reference
+			Voter v1 = new Voter(1234, "Lavish", 30);
+			System.out.println(v1.toString());
+			Voter v2 = new Voter(1432, "Vicky", 25);
+			System.out.println(v2);
+			Voter v3 = new Voter(1523, "Vani", 18);
+			System.out.println(v3);
+			Voter v4 = new Voter(1875, "Lahari", 25);
+			System.out.println(v4);
+		} catch (InvalidAgeVoterException e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+Output:
+Voter Details voterId=1234, name=Lavish, age=30
+Voter Details voterId=1432, name=Vicky, age=25
+guvi.exceptiontask02.InvalidAgeVoterException: invalid age for voter
+
+Q3. Store name of weekdays in an array (starting from "Sunday" at 0 index). Ask day position from user and print day name. Handle array index out of bound exception and give proper message if the user enters day index outside range (0-6).
+Code :
+package guvi.exceptiontask03;
+
+import java.util.Scanner;
+
+//ArrayExceptionMain class to show how the ArrayIndexOutOfBound Exception occurs with main method
+public class ArrayExceptionMain {
+
+	public static void main(String[] args) {
+		// declaring and initliazing weekdays Array
+		String[] weekdays = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+				"Saturday" };
+		// taking day position from userinput within range of index from 0-6 , if user
+		// enter a number which is not in range then Exception is handled
+		System.out.println("Enter Day Position - ");
+		// using Scanner class to take input from user in consloe
+		Scanner scan = new Scanner(System.in);
+		int position = scan.nextInt();
+		try {
+			System.out.println(weekdays[position]);
+		} catch (ArrayIndexOutOfBoundsException error) {
+			System.out.println(error.getMessage()
+					+ " You are trying to access wrong weekday position and thus causing ArrayIndexOutOfBound Exception occured");
+		}
+		scan.close();
+
+	}
+
+}
+
+Output :
+Enter Day Position - 
+9
+Index 9 out of bounds for length 7 You are trying to access wrong weekday position and thus causing ArrayIndexOutOfBound Exception occured
+
+Q4. Create a HashMap where keys are student names (Strings) and values are their corresponding grades (integers). Implement functions to add a new student, remove a student , and Display up a student's grade by name.
+Code :
+package guvi.hashmaptask04;
+
+import java.util.HashMap;
+
+//class StudentHashMapDemo to implement add , remove and display Student details
+public class StudentHashMapDemo {
+
+	public static void main(String[] args) {
+		// using HashMap class for Student with key - Name and value - Grades as
+		// Generics
+		HashMap<String, Integer> studentMap = new HashMap<String, Integer>();
+
+		// adding students to HashMap
+		// adding to HashMap is done by put method with passing arguments key - name and
+		// value - grade
+		studentMap.put("Sumanth Reddy", 9);
+		studentMap.put("Surya", 8);
+		studentMap.put("Mallikarjuna", 9);
+		studentMap.put("Lavanya", 7);
+		studentMap.put("Srinivas", 7);
+
+		// display students from HashMap by printing all students at once
+		System.out.println(studentMap);
+
+		// remove student from HashMap
+		// removing from HashMap is done by remove method with passing parameters name
+		// and grade of student
+		studentMap.remove("Surya", 8);
+
+		// display students after removing one student operation
+		System.out.println(studentMap);
+	}
+
+}
+
+Output :
+{Surya=8, Mallikarjuna=9, Sumanth Reddy=9, Srinivas=7, Lavanya=7}
+{Mallikarjuna=9, Sumanth Reddy=9, Srinivas=7, Lavanya=7}
+
+Q5. Create a stack data structure to store Integers. Create some methods for following functionalities.
+ a)Include functions for pushing elements onto the stack.
+ b)popping elements from the stack.
+Code :
+package guvi.stacktask5;
+
+import java.util.Stack;
+
+//StackMain class is used to give demo of how stack datastructure works with respective below operations
+public class StackMain {
+	// datamember
+	private Stack<Integer> stackList;
+
+	// constructor for initializing Stack with integer type
+	public StackMain() {
+		this.stackList = new Stack<Integer>();
+	}
+
+	// addToStack to add integer element to stackList
+	public void addToStack(int a) {
+		// adding integer elements to stack by using push inbuilt method
+		stackList.push(a);
+	}
+
+	// pop element or remove element from stackList
+	public void popFromStack() {
+		// checking for stackList is empty or not
+		if (stackList.isEmpty()) {
+			// if stack is empty throwing an Exception with error message
+			throw new IllegalStateException("stackList is empty");
+		} else {
+			stackList.pop();
+		}
+	}
+
+	// display integer elements present in stackList
+	public void displayFromStack() {
+		// checking for stackList is empty or not
+		if (stackList.isEmpty()) {
+			throw new IllegalStateException("stackList is Empty cannot Display, Please add elements");
+		} else {
+			System.out.println(stackList);
+		}
+	}
+
+	public static void main(String[] args) {
+		// StackMain class using for stack object creation
+		StackMain stack = new StackMain();
+
+		// adding integer elements to stack by using addToStack method calling passing
+		// integer
+		stack.addToStack(45);
+		stack.addToStack(23);
+		stack.addToStack(12);
+		stack.addToStack(62);
+
+		// displaying integer elements stored in stack by using for loop
+		stack.displayFromStack();
+
+		// removing integer element from stack and again displaying stack
+		stack.popFromStack();
+		stack.displayFromStack();
+		stack.popFromStack();
+		stack.displayFromStack();
+
+	}
+
+}
+
+Output :
+[45, 23, 12, 62]
+[45, 23, 12]
+[45, 23]
+
