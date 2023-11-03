@@ -1,4 +1,4 @@
-Q1. Ramesh is developing a student management system for a university. In this system , you hava a stuent class to represent student information. you are asked to help Ramesh to handle exception which can be occured into program according to following Scenarios:
+Q1. Ramesh is developing a student management system for a university. In this system , you hava a student class to represent student information. you are asked to help Ramesh to handle exception which can be occured into program according to following Scenarios:
  a)class Student with attributes roll no, name, age, and course.Initialize values through parameterized constructor.
  b)If the age of the student is not between 15 and 21 then generate a user-defined exception "AgeNotWithinRangeException".
 c)If a name contains number or special symbols, raise exception "NameNotValidException". Define the two exception classes.
