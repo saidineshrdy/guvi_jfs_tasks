@@ -1,0 +1,141 @@
+Q 1. Write a program on the following questions.
+	1. Write a program using map() method , to convert a list of strings into uppercase. If the given List is : Stream names = Stream.of("aBc","d","ef");
+	Code:
+	package guvi.javaadvance.task5.pb1;
+
+import java.util.stream.Stream;
+
+//class StreamMain
+public class StreamMain {
+
+	public static void main(String[] args) {
+
+		// creating a stream with type string and passing those values by of method
+		Stream<String> names = Stream.of("aBc", "d", "ef");
+		// taking the stream and using map function to convert string values to
+		// Uppercase by using lambda expression and printing using foreach iteration
+		// loop
+		names.map(str -> str.toUpperCase()).forEach(System.out::println);
+
+	}
+
+}
+
+	Output:
+	ABC
+	D
+	EF
+
+
+
+	2. Write a program to check whether the Strings in the List are empty or not and print the list having non-empty strings. If the given List is : Liststrings = Arrays.asList("abc","","bc","efg","abcd","","jkl");
+	Code:
+	package guvi.javaadvance.task5.pb2;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class StreamMain {
+	public static void main(String[] args) {
+		// creating list type string with some values added by using Arrays.asList
+		List<String> list = Arrays.asList("abc", "", "bc", "efg", "abcd", "", "jkl");
+		// first initiating stream and eliminating empty string values by using filter
+		// method ,lambda expression inside it and printing resultant by using foreach
+		list.stream().filter(word -> !word.isEmpty()).forEach(System.out::println);
+
+	}
+}
+
+	Output:
+	abc
+	bc
+	efg
+	abcd
+	jkl
+
+	3. You are a teacher in school. In your class there are 10 students, you have decided to give special gifts to those students whose names start with "A". you are asked to separate those students with the help of a java program.
+	Requirement:
+	- Use List interface to store the student name
+	- Use a lambda expression and the stream API to filter the students
+	Code:
+	package guvi.javaadvance.task5.pb3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+//class StudentMain
+public class StudentMain {
+
+	public static void main(String[] args) {
+		// creating List interface with studentNames by using ArrayList class with
+		// String type to give string values as names
+		List<String> studentNames = new ArrayList<String>();
+		// adding studentNames by using add method
+		studentNames.add("Rahul");
+		studentNames.add("Arjun");
+		studentNames.add("Bhasker");
+		studentNames.add("Srinu");
+		studentNames.add("Arpith");
+		studentNames.add("Anu");
+		studentNames.add("Suresh");
+		studentNames.add("Chaitanya");
+		studentNames.add("Karishma");
+		studentNames.add("Siva");
+		// using stream interface finding student name starts with A by using filter
+		// method
+		Stream<String> nameStartsWithA = studentNames.stream().filter(str -> str.startsWith("A"));
+		// printing names who's name starts with A to gift students by uiing Stream
+		// filtered output
+		nameStartsWithA.forEach(System.out::println);
+
+	}
+
+}
+
+	Output:
+	Arjun
+	Arpith
+	Anu
+
+	4. Rajesh has been given a task to create an app which takes the user's birthdate as input and calculate their age, you have to help him to build this app using the java.time.LocalDate class.
+	Input:
+	Enter your birthdate (yyyy-mm-dd): 1990-05-15
+	Output:
+	Your age is: 33 years, 4 months, and 13 days.
+	Code:
+	package guvi.javaadvance.task5.pb4;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
+
+//class AgeCalculatorMain
+public class AgeCalulatorMain {
+
+	public static void main(String[] args) {
+		// Scanner class to take input from user in console
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("Enter yourbirthdate (yyyy-mm-dd):");
+		// user input of birthdate by using scanner object
+		String birthdate = scan.nextLine();
+		// parsing the string dob to LocalDate
+		LocalDate dateOfBirth = LocalDate.parse(birthdate);
+		// taking current date to calulate age by now method
+		LocalDate currentDate = LocalDate.now();
+		// Using Period class we can find the duration between two dates by using
+		// between method
+		Period period = Period.between(dateOfBirth, currentDate);
+		// printing age
+		System.out.println("Your age is : " + period.getYears() + "years," + period.getMonths() + "months, and "
+				+ period.getDays() + "days.");
+
+	}
+
+}
+
+	Output:
+	Enter yourbirthdate (yyyy-mm-dd):
+	1990-05-15
+	Your age is : 33years,5months, and 26days.
