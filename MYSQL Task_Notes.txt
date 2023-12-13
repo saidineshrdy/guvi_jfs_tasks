@@ -1,0 +1,121 @@
+MYSQL Task:
+Q 1. for question 1 i have took screenshots of the respective query with output. please refer those
+Q 2. for question 2 i wrote java code please check below with respective classes and application.properties file fields also. and also i am pasting src code in the respective task SQL_Task folder.
+Code :
+application.properties file
+
+jdbc.dBUrl=jdbc:mysql://localhost:3306/demo
+jdbc.userName=root
+jdbc.password=**********
+
+package com.mysql.jdbc.connection;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class JDBCUtil {
+	public static Connection getConnection() {
+		Properties prop = new Properties();
+		Connection myConn = null;
+
+		FileReader fileReader = null;
+		try {
+
+			fileReader = new FileReader(new File("application.properties"));
+			prop.load(fileReader);
+			String dbUrl = prop.getProperty("jdbc.dBUrl");
+			String username = prop.getProperty("jdbc.userName");
+			String password = prop.getProperty("jdbc.password");
+			myConn = DriverManager.getConnection(dbUrl, username, password);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return myConn;
+
+	}
+}
+
+package com.mysql.jdbc.connection;
+
+public class QueryConstants {
+	public static final String INSERT_SQLQUERY = "insert employee(empcode,empname,empage,esalary) values (?,?,?,?)";
+}
+
+package com.mysql.jdbc.connection;
+
+import java.sql.Connection;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertExample {
+	public static void main(String[] args) {
+
+		Connection connection = JDBCUtil.getConnection();
+		try (PreparedStatement record1 = connection.prepareStatement(QueryConstants.INSERT_SQLQUERY);
+
+				PreparedStatement record2 = connection.prepareStatement(QueryConstants.INSERT_SQLQUERY);
+
+				PreparedStatement record3 = connection.prepareStatement(QueryConstants.INSERT_SQLQUERY);
+
+				PreparedStatement record4 = connection.prepareStatement(QueryConstants.INSERT_SQLQUERY);
+
+				PreparedStatement record5 = connection.prepareStatement(QueryConstants.INSERT_SQLQUERY);) {
+
+			record1.setInt(1, 101);
+			record1.setString(2, "Jenny");
+			record1.setInt(3, 25);
+			record1.setDouble(4, 10000);
+
+			record2.setInt(1, 103);
+			record2.setString(2, "Joe");
+			record2.setInt(3, 20);
+			record2.setDouble(4, 40000);
+
+			record3.setInt(1, 102);
+			record3.setString(2, "Jacky");
+			record3.setInt(3, 30);
+			record3.setDouble(4, 20000);
+
+			record4.setInt(1, 104);
+			record4.setString(2, "John");
+			record4.setInt(3, 40);
+			record4.setDouble(4, 80000);
+
+			record5.setInt(1, 105);
+			record5.setString(2, "Shameer");
+			record5.setInt(3, 25);
+			record5.setDouble(4, 90000);
+
+			connection.setAutoCommit(false);
+
+			record1.execute();
+			record2.execute();
+			record3.execute();
+			record4.execute();
+			record5.execute();
+
+			connection.commit();
+
+			System.out.println("Records inserted successfully");
+
+			connection.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
