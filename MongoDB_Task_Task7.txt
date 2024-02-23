@@ -1,0 +1,22 @@
+1. Find all the topics and tasks which are thought in the month of October
+Query:
+db.topics.find({"teachingDate":{$gte:ISODate("2023-10-01"),$lt:ISODate("2023-11-01")}},{"topic":1,"task":1,"_id":0})
+
+2.Find all the company drives which appeared between 15 oct 2020 and 31 oct 2020
+Query:
+db.company_drives.find({"driveDate":{$gte:ISODate("2020-10-15"),$lte:ISODate("2020-10-31")}})
+
+3. Find all the company drives and students who are appeared for the placement
+Query:
+db.company_drives.find({},{"company_driveName":1,"compant_driveDate":1,"students"1,"_id":0})
+
+4. Find the number of problems solved by user in codekata
+Query:
+db.codekata.findOne({"username":"<enter user name to search for>"},{"problems_Solved":1,"_id":0})
+
+5. Find the number id users who are absent and task is not submitted between 15-oct-2020 and 31-oct-2020
+Query:
+db.users.find({"attendance":"absent","task_submitted":false,"date":{$gte:ISODate("2020-10-15"),$lte:ISODate("2020-10-31")}})).count()
+
+
+
